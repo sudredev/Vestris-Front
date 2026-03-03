@@ -1,12 +1,12 @@
 /* eslint-disable no-empty */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const API_BASE = (() => {
+export const API_BASE = (() => {
   try {
     // @ts-ignore
     const vite =
       typeof import.meta !== "undefined" &&
-      (import.meta as any).env?.VITE_API_BASE;
+      (import.meta as any).env?.VITE_API_URL;
     if (vite) return String(vite).replace(/\/$/, "");
   } catch {}
   const reactEnv = (globalThis as any)?.process?.env?.REACT_APP_API_BASE;
@@ -28,7 +28,6 @@ export async function fetchPacienteById(id: string, token?: string | null) {
   const url = `${API_BASE}/api/v1/pacientes/${encodeURIComponent(id)}`;
   const headers: Record<string, string> = { Accept: "application/json" };
   if (token) headers.Authorization = `Bearer ${token}`;
-  // eslint-disable-next-line no-console
   console.debug("[fetchPacienteById] GET", url);
   const res = await fetch(url, { headers });
   if (!res.ok) return null;
@@ -43,7 +42,6 @@ export async function fetchAtendimentoById(id: string, token?: string | null) {
   const url = `${API_BASE}/api/v1/atendimentos/${encodeURIComponent(id)}`;
   const headers: Record<string, string> = { Accept: "application/json" };
   if (token) headers.Authorization = `Bearer ${token}`;
-  // eslint-disable-next-line no-console
   console.debug("[fetchAtendimentoById] GET", url);
   const res = await fetch(url, { headers });
   if (!res.ok) return null;

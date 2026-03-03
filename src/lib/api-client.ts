@@ -26,8 +26,20 @@ import {
   ProtocolosVacinaisApi,
 } from "../api";
 
+// Use Vite environment variable for the API base URL so we don't hardcode it here.
+// In development define VITE_API_URL in `.env`. In production use `.env.production`.
+function getViteApiUrl(): string | undefined {
+  // import.meta.env has no stable TS type here (depends on Vite), so cast safely.
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  return (
+    (import.meta && import.meta.env && import.meta.env.VITE_API_URL) ||
+    undefined
+  );
+}
+
 const apiConfig = new Configuration({
-  basePath: "http://localhost:8080",
+  basePath: getViteApiUrl() ?? "http://localhost:8080/api/v1",
   accessToken: () => localStorage.getItem("vestris_token") || "",
 });
 

@@ -1,5 +1,3 @@
-/* eslint-disable no-empty */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Helper mínimo para obter a clínica do usuário logado
@@ -13,19 +11,7 @@ export interface MinhaClinicaDados {
   [key: string]: any;
 }
 
-const API_BASE = (() => {
-  try {
-    // vite
-    // @ts-ignore
-    const vite =
-      typeof import.meta !== "undefined" &&
-      (import.meta as any).env?.VITE_API_BASE;
-    if (vite) return String(vite).replace(/\/$/, "");
-  } catch {}
-  const reactEnv = (globalThis as any)?.process?.env?.REACT_APP_API_BASE;
-  if (reactEnv) return String(reactEnv).replace(/\/$/, "");
-  return "http://localhost:8080";
-})();
+import { API_BASE } from "./resources";
 
 export async function fetchMinhaClinica(
   token?: string | null,
@@ -39,14 +25,12 @@ export async function fetchMinhaClinica(
   const headers: Record<string, string> = { Accept: "application/json" };
   if (token) headers.Authorization = `Bearer ${token}`;
 
-  // eslint-disable-next-line no-console
   console.debug("[fetchMinhaClinica] GET", url, { headers });
 
   const res = await fetch(url, { method: "GET", headers });
   const text = await res.text().catch(() => "");
 
   if (!res.ok) {
-    // eslint-disable-next-line no-console
     console.warn("[fetchMinhaClinica] status", res.status, text);
     return undefined;
   }
@@ -64,7 +48,6 @@ export async function fetchMinhaClinica(
       if (json.id) return json as MinhaClinicaDados;
     }
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.warn("[fetchMinhaClinica] parse error", e);
   }
   return undefined;

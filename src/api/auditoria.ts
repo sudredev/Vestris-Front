@@ -1,14 +1,4 @@
-// Detecta URL da API (mesma lógica dos outros arquivos)
-const API_BASE = (() => {
-  try {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const vite = import.meta.env?.VITE_API_BASE;
-    if (vite) return String(vite).replace(/\/$/, "");
-    // eslint-disable-next-line no-empty
-  } catch {}
-  return "http://localhost:8080";
-})();
+import { API_BASE } from "./resources";
 
 export interface AuditoriaLog {
   id: string;

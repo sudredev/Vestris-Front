@@ -52,8 +52,11 @@ const TODAS_VIAS = [
 
 async function fetchViasSugeridas(medId: string, espId: string) {
   const token = localStorage.getItem("vestris_token");
+  // use centralized API_BASE so we don't hardcode localhost
+  // import here to avoid circular deps at module top-level
+  const { API_BASE } = await import("@/api/resources");
   const res = await fetch(
-    `http://localhost:8080/api/v1/medicamentos/${medId}/vias?especieId=${espId}`,
+    `${API_BASE}/api/v1/medicamentos/${medId}/vias?especieId=${espId}`,
     {
       headers: { Authorization: `Bearer ${token}` },
     },

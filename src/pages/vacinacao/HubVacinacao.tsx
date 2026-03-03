@@ -40,15 +40,13 @@ import { toast } from "sonner";
 // Fetch manual
 async function fetchHubData(endpoint: string) {
   const token = localStorage.getItem("vestris_token");
-  const res = await fetch(
-    `http://localhost:8080/api/v1/hub-vacinacao/${endpoint}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: "application/json",
-      },
+  const { API_BASE } = await import("@/api/resources");
+  const res = await fetch(`${API_BASE}/api/v1/hub-vacinacao/${endpoint}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
     },
-  );
+  });
   if (!res.ok) throw new Error("Falha ao buscar dados");
   const json = await res.json();
   console.log(`Dados ${endpoint}:`, json.dados); // Debug para ver se chega algo
