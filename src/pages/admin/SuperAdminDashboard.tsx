@@ -173,7 +173,9 @@ export function SuperAdminDashboard() {
                     <TableCell className="text-slate-500">{u.email}</TableCell>
                     <TableCell>
                       <Badge
-                        variant={u.perfil === "ADMIN" ? "default" : "secondary"}
+                        variant={
+                          u.perfil === "ADMIN_GESTOR" ? "default" : "secondary"
+                        }
                       >
                         {u.perfil}
                       </Badge>
